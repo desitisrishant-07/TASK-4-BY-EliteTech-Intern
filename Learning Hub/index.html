@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - Online Learning Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <div class="logo">
+            <span>🎓</span> LearnHub
+        </div>
+
+        <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#courses">Courses</a>
+            <a href="#progress">Progress</a>
+        </nav>
+
+        <div class="header-actions">
+            <button id="themeBtn" class="icon-btn">🌙</button>
+            <button id="loginBtn" class="login-btn">Login</button>
+            <button id="logoutBtn" class="logout-btn hidden">Logout</button>
+        </div>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <main>
+
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <span class="badge">🚀 Learn • Practice • Grow</span>
+
+                <h1>
+                    Learn new skills.
+                    <span>Build your future.</span>
+                </h1>
+
+                <p>
+                    Watch video lessons, take quizzes, and track your
+                    learning progress — all in one place.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="primary-btn" onclick="scrollToCourses()">
+                        Explore Courses →
+                    </button>
+                    <button class="secondary-btn" onclick="showProgress()">
+                        View Progress
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="floating-icon">📚</div>
+                <h3>Start Learning Today</h3>
+                <p>Interactive lessons designed for students.</p>
+
+                <div class="mini-progress">
+                    <div class="progress-label">
+                        <span>Your Progress</span>
+                        <strong id="heroProgress">0%</strong>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="heroProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STATS ================= -->
+        <section class="stats">
+            <div class="stat-card">
+                <span>📖</span>
+                <div>
+                    <strong id="courseCount">4</strong>
+                    <p>Courses</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <span>🎥</span>
+                <div>
+                    <strong>20+</strong>
+                    <p>Video Lessons</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <span>📝</span>
+                <div>
+                    <strong>50+</strong>
+                    <p>Quiz Questions</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <span>🏆</span>
+                <div>
+                    <strong id="completedCount">0</strong>
+                    <p>Completed</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= COURSES ================= -->
+        <section id="courses" class="courses-section">
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">LEARNING LIBRARY</span>
+                    <h2>Explore Courses</h2>
+                    <p>Choose a course and start learning at your own pace.</p>
+                </div>
+
+                <div class="search-box">
+                    🔍
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search courses..."
+                    >
+                </div>
+            </div>
+
+            <div id="courseGrid" class="course-grid"></div>
+        </section>
+
+        <!-- ================= COURSE PLAYER ================= -->
+        <section id="learningArea" class="learning-area hidden">
+
+            <div class="learning-header">
+                <button class="back-btn" onclick="closeCourse()">
+                    ← Back to Courses
+                </button>
+
+                <div>
+                    <span id="currentCourseCategory" class="section-tag">
+                        COURSE
+                    </span>
+                    <h2 id="currentCourseTitle">Course Title</h2>
+                </div>
+            </div>
+
+            <div class="learning-layout">
+
+                <!-- VIDEO -->
+                <div class="video-column">
+
+                    <div class="video-wrapper">
+                        <video id="lessonVideo" controls>
+                            <source
+                                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                                type="video/mp4"
+                            >
+                            Your browser does not support video playback.
+                        </video>
+                    </div>
+
+                    <div class="lesson-info">
+                        <div>
+                            <span class="lesson-number" id="lessonNumber">
+                                Lesson 1
+                            </span>
+                            <h2 id="lessonTitle">Introduction</h2>
+                        </div>
+
+                        <button id="completeLessonBtn" class="complete-btn">
+                            ✓ Mark Complete
+                        </button>
+                    </div>
+
+                    <p id="lessonDescription" class="lesson-description">
+                        Welcome to this lesson.
+                    </p>
+
+                    <!-- QUIZ -->
+                    <div id="quizBox" class="quiz-box hidden">
+                        <div class="quiz-heading">
+                            <span>🧠</span>
+                            <div>
+                                <h3>Quick Quiz</h3>
+                                <p>Test what you've learned.</p>
+                            </div>
+                        </div>
+
+                        <div id="quizContent"></div>
+
+                        <button
+                            id="submitQuizBtn"
+                            class="primary-btn"
+                            onclick="submitQuiz()"
+                        >
+                            Submit Quiz
+                        </button>
+
+                        <div id="quizResult"></div>
+                    </div>
+                </div>
+
+                <!-- LESSON SIDEBAR -->
+                <aside class="lesson-sidebar">
+
+                    <div class="course-progress-card">
+                        <div class="progress-label">
+                            <strong>Course Progress</strong>
+                            <span id="courseProgressText">0%</span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div id="courseProgressBar"></div>
+                        </div>
+                    </div>
+
+                    <h3>Course Content</h3>
+
+                    <div id="lessonList"></div>
+
+                </aside>
+
+            </div>
+        </section>
+
+        <!-- ================= PROGRESS ================= -->
+        <section id="progress" class="progress-section">
+            <div class="section-heading">
+                <div>
+                    <span class="section-tag">YOUR JOURNEY</span>
+                    <h2>Learning Progress</h2>
+                    <p>Keep track of your learning achievements.</p>
+                </div>
+            </div>
+
+            <div class="overall-progress-card">
+                <div class="overall-progress-info">
+                    <div class="progress-circle">
+                        <span id="overallProgressCircle">0%</span>
+                    </div>
+
+                    <div>
+                        <h3>Overall Progress</h3>
+                        <p>
+                            Keep learning and complete your courses
+                            to reach your goals.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="big-progress">
+                    <div class="progress-label">
+                        <span>Course completion</span>
+                        <strong id="overallProgressText">0%</strong>
+                    </div>
+
+                    <div class="progress-bar large">
+                        <div id="overallProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="progressCourses" class="progress-courses"></div>
+        </section>
+
+    </main>
+
+    <!-- ================= LOGIN MODAL ================= -->
+    <div id="loginModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <button class="close-modal" onclick="closeLogin()">×</button>
+
+            <div class="modal-logo">🎓</div>
+
+            <h2 id="authTitle">Welcome Back!</h2>
+            <p id="authSubtitle">
+                Login to continue your learning journey.
+            </p>
+
+            <form id="authForm">
+
+                <div id="nameField" class="form-group hidden">
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="nameInput"
+                        placeholder="Enter your name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="emailInput"
+                        placeholder="you@example.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="passwordInput"
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="primary-btn full-btn">
+                    <span id="authButtonText">Login</span>
+                </button>
+
+            </form>
+
+            <p class="switch-auth">
+                <span id="switchText">Don't have an account?</span>
+                <button id="switchAuthBtn" onclick="toggleAuthMode()">
+                    Register
+                </button>
+            </p>
+
+            <div id="authMessage"></div>
+
+        </div>
+    </div>
+
+    <!-- ================= TOAST ================= -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">🎓 LearnHub</div>
+            <p>Learn today. Grow tomorrow.</p>
+        </div>
+
+        <p class="copyright">
+            © 2026 LearnHub. All rights reserved.
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
